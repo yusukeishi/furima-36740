@@ -11,7 +11,7 @@
 | first_name         | string      | null: false             |
 | family_name _kana  | string      | null: false             |
 | first_name_kana    | string      | null: false             |
-| birthday           | data        | null: false             |
+| birthday           | date        | null: false             |
 
 ### Association
 
@@ -51,7 +51,7 @@
 
 - belongs_to :user
 - belongs_to :item
-- has_one :buyer
+- has_one :buyer_address
 
 
 

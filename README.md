@@ -2,38 +2,37 @@
 
 ## users テーブル
 
-| Column             | Type        | Options     |
-| ------------------ | ----------- | ----------- |
-| nickname           | string      | null: false |
-| email              | string      | null: false |
-| encrypted_password | string      | null: false |
-| family_name        | string      | null: false |
-| first_name         | string      | null: false |
-| family_name _kana  | string      | null: false |
-| first_name_kana    | string      | null: false |
+| Column             | Type        | Options                 |
+| ------------------ | ----------- | ----------------------- |
+| nickname           | string      | null: false             |
+| email              | string      | null: false ,unique:true|
+| encrypted_password | string      | null: false             |
+| family_name        | string      | null: false             |
+| first_name         | string      | null: false             |
+| family_name _kana  | string      | null: false             |
+| first_name_kana    | string      | null: false             |
+| birthday           | data        | null: false             |
 
 ### Association
 
-- belongs_to :buyer
+- has_many :buyers
 - has_many :items
 
 
 
 ## items テーブル
 
-| Column             | Type       | Options     |
-| ------------------ | ---------- | ----------- |
-|name                | string     | null: false |
-|description         | text       | null: false |
-|status              | integer    | null: false |
-|category            | integer    | null: false |
-|delivery_charge     | integer    | null: false |
-|delivery_day        | integer    | null: false |
-|delivery_way        | integer    | null: false |
-|price               | integer    | null: false |
-|commission          | integer    | null: false |
-|price_judgment      | integer    | null: false |
-|user_id             | references |             |
+| Column              | Type       | Options     |
+| ------------------  | ---------- | ----------- |
+| name                | string     | null: false |
+| description         | text       | null: false |
+| status_id           | integer    | null: false |
+| category_id         | integer    | null: false |
+| delivery_charge_id  | integer    | null: false |
+| delivery_day_id     | integer    | null: false |
+| delivery_way_id     | integer    | null: false |
+| price               | integer    | null: false |
+| user                | references | null: false, foreign_key: true |
 
 ### Association
 
@@ -44,11 +43,10 @@
 
 ## buyers テーブル
 
-| Column             | Type       | Options     |
-| ------------------ | ---------- | ----------- |
-| user_id            | references |             |
-| item_id            | references |             |
-
+| Column              | Type       | Options     |
+| ------------------  | ---------- | ----------- |
+| user                | references | null: false, foreign_key: true |
+| item                | references | null: false, foreign_key: true |
 ### Association
 
 - belongs_to :user
@@ -62,12 +60,12 @@
 | Column             | Type       | Options     |
 | ------------------ | ---------- | ----------- |
 | post_number        | string      | null: false |
-| prefecture         | string      | null: false |
+| prefecture_id      | integer     | null: false |
 | city               | string      | null: false |
 | address            | string      | null: false |
-| building_name      | string      | null: false |
+| building_name      | string      |             |
 | phone_number       | string      | null: false |
-| user_id            | references  |             |
+| buyer              | references  | null: false, foreign_key: true |
 
 
 ### Association

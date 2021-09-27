@@ -32,8 +32,8 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("Password can't be blank")
       end
       it 'passwordとpassword_confirmationが不一致では登録できない' do
-        @user.password = '123456'
-        @user.password_confirmation = '1234567'
+        @user.password = '123abc'
+        @user.password_confirmation = '123abcd'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
@@ -52,7 +52,6 @@ RSpec.describe User, type: :model do
       it '名字が空では登録できない' do
         @user.family_name = ''
         @user.valid?
-
         expect(@user.errors.full_messages).to include("Family name can't be blank")
       end
       it '名前が空では登録できない' do
@@ -74,6 +73,48 @@ RSpec.describe User, type: :model do
         @user.birthday = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("Birthday can't be blank")
+      end
+
+      it '名字が漢字・平仮名・片仮名以外だと登録出来ない' do
+        @user.family_name = 'kana'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name is invalid")
+      end
+      it '名前が漢字・平仮名・片仮名以外だと登録出来ない' do
+        @user.first_name = 'kana'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name is invalid")
+      end
+      it '名字（カナ）が片仮名以外だと登録出来ない' do
+        @user.family_name_kana = 'かな'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name kana is invalid")
+      end
+      it '名前（カナ）片仮名以外だと登録出来ない' do
+        @user.first_name_kana = 'かな'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name kana is invalid")
+      end
+      it 'emailに@がないと登録できない' do
+        @user.email = 'aaagmail.com'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email is invalid")
+      end
+
+      it 'passwordが全角の場合は登録できない' do
+        @user.password = '１２３４５b'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", "Password is invalid")
+      end
+      it 'passwordが半角数字のみの場合は登録できない' do
+        @user.password = '111111'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", "Password is invalid")
+      end
+      it 'passwordが半角英字のみの場合は登録できない' do
+        @user.password = 'aaaaaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", "Password is invalid")
       end
     end
   end

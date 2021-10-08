@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
   describe '購入情報の保存' do
-  before do
-    @order = FactoryBot.build(:order)
-  end
+    before do
+      @order = FactoryBot.build(:order)
+    end
 
     context '配送先情報の保存ができるとき' do
       it 'すべての値が正しく入力されていれば保存できること' do
@@ -63,7 +63,7 @@ RSpec.describe Order, type: :model do
       it '郵便番号にハイフンがないと保存できないこと' do
         @order.post_number = 1_234_567
         @order.valid?
-        expect(@order.errors.full_messages).to include("Post number is invalid. Include hyphen(-)")
+        expect(@order.errors.full_messages).to include('Post number is invalid. Include hyphen(-)')
       end
       it '都道府県が「---」だと保存できないこと' do
         @order.prefecture_id = 0
@@ -93,7 +93,7 @@ RSpec.describe Order, type: :model do
       it '電話番号にハイフンがあると保存できないこと' do
         @order.phone_number = '123 - 1234 - 1234'
         @order.valid?
-        expect(@order.errors.full_messages).to include("Phone number is invalid")
+        expect(@order.errors.full_messages).to include('Phone number is invalid')
       end
       it '電話番号が12桁以上あると保存できないこと' do
         @order.phone_number = 12_345_678_910_123_111

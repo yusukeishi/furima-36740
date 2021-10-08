@@ -24,9 +24,8 @@ class ItemsController < ApplicationController
   def show
   end
 
-
   def edit
-  end  
+  end
 
   def update
     if @item.update(item_params)
@@ -36,14 +35,14 @@ class ItemsController < ApplicationController
     end
   end
 
-    def destroy
-     if @item.user_id == current_user.id
+  def destroy
+    if @item.user_id == current_user.id
       @item.destroy
       redirect_to root_path
-     else
+    else
       redirect_to root_path
-     end
     end
+  end
 
   private
 
@@ -56,13 +55,11 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-
   def item_edit
     redirect_to root_path unless current_user == @item.user
   end
 
   def sold_out
-    redirect_to root_path if @item.buyer != nil
+    redirect_to root_path unless @item.buyer.nil?
   end
 end
-

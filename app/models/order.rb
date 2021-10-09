@@ -6,11 +6,11 @@ class Order
     validates :user_id
     validates :item_id
 
-    validates :post_number, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: 'is invalid. Include hyphen(-)' }
-    validates :prefecture_id, numericality: { other_than: 1, message: "can't be blank" }
+    validates :post_number, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: '間に(-)' }
+    validates :prefecture_id, numericality: { other_than: 1, message: "を入力してください" }
     validates :city
     validates :address
-    validates :phone_number, format: { with: /\A[0-9]{11}\z/, message: 'is invalid' }
+    validates :phone_number, format: { with: /\A[0-9]{11}\z/, message: 'を入力してください' }
 
     validates :token
   end
